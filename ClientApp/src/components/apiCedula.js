@@ -15,7 +15,8 @@ const Cedula = () => {
   const [cedula, setCedula] = useState(0);
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState(0);
-  const [isLogins, setIslogins] = useState(false);
+  const [ isLogins, setIslogins ] = useState(false);
+  const [ isVery, setIsvery ] = useState(false);
   const [datas, setDatas] = useState([]);
 
   const handlChange1 = (e) => {
@@ -44,6 +45,7 @@ const Cedula = () => {
         console.log(response.data);
         if (response.data.OK !== true) {
           setDatas(response.data);
+          setIsvery(true);
           //setIslogins(true);
         }
       })
@@ -61,17 +63,8 @@ const Cedula = () => {
       tel: tel,
     };
     axios.post(`http://localhost:5000/api/DbCedula/`, data)
-    .then(result => console.log(result));
-    // $.ajax({
-    //     type: 'POST',
-    //     url: 'http://localhost:5000/api/DbCedula',
-    //     dataType: 'JSON',
-    //     contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-    //     data: data,
-    //     success: (result) => {
-    //         console.log(result);
-    //     }
-    // });
+    .then(response => console.log(response))
+    .catch(error => console.error(error));
   };
 
   return (
@@ -89,6 +82,8 @@ const Cedula = () => {
               onChange={handlChange1}
             />
           </FormGroup>
+          
+          {isVery ? (<h3>Genial, ya está verificado</h3>) : null}
 
           <FormGroup>
             <Button color="success" onClick={handleClick1}>

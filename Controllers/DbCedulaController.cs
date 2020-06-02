@@ -78,12 +78,26 @@ namespace ReactApplication.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<DbCedula>> PostDbCedula(DbCedula dbCedula)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<DbCedula>> PostDbCedula([FromBody]DbCedula dbCedula)
         {
-            _context.Cedulas.Add(dbCedula);
+            var todoItem = new DbCedula
+            {
+                Nombre = dbCedula.Nombre,
+                Apellido = dbCedula.Apellido,
+                Email = dbCedula.Email,
+                Tel = dbCedula.Tel,
+                FechaNacimiento = dbCedula.FechaNacimiento,
+                LugarNacimiento = dbCedula.LugarNacimiento
+            };
+            _context.Cedulas.Add(todoItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDbCedula", new { id = dbCedula.Id }, dbCedula);
+
+            if (ModelState.IsValid)
+                BadRequest();
+
+            return CreatedAtAction(nameof(GetDbCedula), new { id = todoItem.Id }, todoItem);
         }
 
         // DELETE: api/DbCedula/5

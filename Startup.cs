@@ -48,7 +48,10 @@ namespace ReactApplication
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseDefaultFiles();
+
             app.UseHttpsRedirection();
+            app.UseHttpMethodOverride();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
