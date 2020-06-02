@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import * as $ from 'jquery';
 import {
   Jumbotron,
   Button,
@@ -12,12 +11,13 @@ import {
 } from "reactstrap";
 
 const Cedula = () => {
-  const [cedula, setCedula] = useState(0);
-  const [email, setEmail] = useState("");
-  const [tel, setTel] = useState(0);
+  const [ cedula, setCedula ] = useState(0);
+  const [ email, setEmail ] = useState("");
+  const [ tel, setTel ] = useState(0);
   const [ isLogins, setIslogins ] = useState(false);
-  const [ isVery, setIsvery ] = useState(false);
-  const [datas, setDatas] = useState([]);
+  const [ isVery, setIsvery ] = useState(null);
+  const [ datas, setDatas ] = useState([]);
+  const [ datos, setDatos ] = useState([]);
 
   const handlChange1 = (e) => {
     setCedula(([e.target.name] = e.target.value));
@@ -43,10 +43,10 @@ const Cedula = () => {
       // })
       .then((response) => {
         console.log(response.data);
-        if (response.data.OK !== true) {
+        if (response.data.OK) {
           setDatas(response.data);
           setIsvery(true);
-          //setIslogins(true);
+          setIslogins(true);
         }
       })
       .catch((error) => console.log("Error PaPu" + error));
@@ -62,10 +62,18 @@ const Cedula = () => {
       email: email,
       tel: tel,
     };
-    axios.post(`http://localhost:5000/api/DbCedula/`, data)
+    axios.post(`http://localhost:5000/api/DbCedula`, data)
     .then(response => console.log(response))
     .catch(error => console.error(error));
   };
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/DbCedula`)
+    .then(response => {
+      setDatos(response.data);
+    })
+    .catch(error => console.log(`Error ${error}`));
+  }, [datos]);
 
   return (
     <div>
@@ -83,7 +91,7 @@ const Cedula = () => {
             />
           </FormGroup>
           
-          {isVery ? (<h3>Genial, ya está verificado</h3>) : null}
+          {isVery ? (<h3>Genial, ya está verificado</h3>) : (<h3>Nmms, no es válido</h3>)}
 
           <FormGroup>
             <Button color="success" onClick={handleClick1}>
@@ -139,14 +147,16 @@ const Cedula = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>40213608348</td>
-            <td>Victor</td>
-            <td>Rosario</td>
-            <td>8095553333</td>
-            <td>hola@gmail.com</td>
-          </tr>
+
+          {datos.map((e,i) => 
+          <tr key={i}>
+            <th scope="row">{i + 1}</th>
+            <td>{e.cedula}</td>
+            <td>{e.nombre}</td>
+            <td>{e.apellido}</td>
+            <td>{e.tel}</td>
+            <td>{e.email}</td>
+          </tr>)}
         </tbody>
       </Table>
     </div>

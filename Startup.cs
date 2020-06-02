@@ -28,6 +28,7 @@ namespace ReactApplication
         {
             services.AddEntityFrameworkSqlite().AddDbContext<CedulaContext>();
 
+
             services.AddControllersWithViews();
 
             services.AddSpaStaticFiles(configuration =>
@@ -51,7 +52,6 @@ namespace ReactApplication
             app.UseDefaultFiles();
 
             app.UseHttpsRedirection();
-            app.UseHttpMethodOverride();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
