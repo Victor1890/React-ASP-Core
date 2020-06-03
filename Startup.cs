@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ReactApplication.Model;
+using System;
 
 namespace ReactApplication
 {
@@ -15,8 +16,11 @@ namespace ReactApplication
         {
             using (var client = new CedulaContext())
             {
-                if(client.Database.EnsureCreated())
-                    client.Database.Migrate();
+                try
+                {
+                    if(client.Database.EnsureCreated())
+                        client.Database.Migrate();
+                }catch(Exception) { }
             }
             Configuration = configuration;
         }

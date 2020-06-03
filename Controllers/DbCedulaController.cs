@@ -49,9 +49,9 @@ namespace ReactApplication.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDbCedula(int id, DbCedula dbCedula)
         {
-            if(dbCedula.Id == id)
+            if(id != dbCedula.Id)
             {
-                BadRequest();
+                return BadRequest();
             }
 
             _context.Entry(dbCedula).State = EntityState.Modified;

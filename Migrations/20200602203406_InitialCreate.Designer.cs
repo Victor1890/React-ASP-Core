@@ -8,7 +8,7 @@ using ReactApplication.Model;
 namespace ReactApplication.Migrations
 {
     [DbContext(typeof(CedulaContext))]
-    [Migration("20200601174220_InitialCreate")]
+    [Migration("20200602203406_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +47,23 @@ namespace ReactApplication.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cedulas");
+                });
+
+            modelBuilder.Entity("ReactApplication.Model.DbUsers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

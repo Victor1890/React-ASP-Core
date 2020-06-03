@@ -46,6 +46,23 @@ namespace ReactApplication.Migrations
 
                     b.ToTable("Cedulas");
                 });
+
+            modelBuilder.Entity("ReactApplication.Model.DbUsers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
 #pragma warning restore 612, 618
         }
     }

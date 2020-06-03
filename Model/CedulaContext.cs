@@ -20,5 +20,6 @@ namespace ReactApplication.Model
         }
 
         public DbSet<DbCedula> Cedulas { get; set; }
+        public DbSet<DbUsers> Users { get; set; }
     }
 }
