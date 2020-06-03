@@ -33,10 +33,12 @@
     <Compile Remove="Migrations\20200531141036_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20200601174220_InitialCreate.cs" />
     <Compile Remove="Migrations\20200601174220_InitialCreate.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Compile Remove="Migrations\20200602203406_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200602203406_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200603124531_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200603124531_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200603131751_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200603131751_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

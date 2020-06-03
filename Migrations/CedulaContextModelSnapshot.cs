@@ -24,8 +24,8 @@ namespace ReactApplication.Migrations
                     b.Property<string>("Apellido")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Cedula")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("Cedula")
+                        .HasColumnType("BIGINT");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
@@ -39,8 +39,8 @@ namespace ReactApplication.Migrations
                     b.Property<string>("Nombre")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Tel")
-                        .HasColumnType("INTEGER");
+                    b.Property<long>("Tel")
+                        .HasColumnType("BIGINT");
 
                     b.HasKey("Id");
 

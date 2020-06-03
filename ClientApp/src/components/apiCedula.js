@@ -34,16 +34,9 @@ const Cedula = () => {
   const handleClick1 = () => {
     axios
       .get(`http://173.249.49.169:88/api/test/consulta/${cedula}`)
-      // axios.post('http://localhost:5000/api/DbCedula', {
-      //     "Cedula": 6051,
-      //     "Nombre": "Victor",
-      //     "Apellido": "Rosario",
-      //     "FechaNacimiento": "19/07/1999",
-      //     "LugarNacimiento": "Santo Domingo"
-      // })
       .then((response) => {
         console.log(response.data);
-        if (response.data.OK) {
+        if (response.data.Ok === true) {
           setDatas(response.data);
           setIsvery(true);
           setIslogins(true);
@@ -53,6 +46,9 @@ const Cedula = () => {
   };
 
   const handleClick2 = () => {
+
+    //if(email === '' || tel === 0)
+
     const data = {
       Cedula: datas.Cedula,
       Nombre: datas.Nombres,
@@ -60,8 +56,9 @@ const Cedula = () => {
       FechaNacimiento: datas.FechaNacimiento,
       LugarNacimiento: datas.LugarNacimiento,
       email: email,
-      tel: tel,
+      tel: parseInt(tel),
     };
+    console.table(data);
     axios.post(`http://localhost:5000/api/DbCedula`, data)
     .then(response => console.log(response))
     .catch(error => console.error(error));
@@ -91,7 +88,7 @@ const Cedula = () => {
             />
           </FormGroup>
           
-          {isVery ? (<h3>Genial, ya está verificado</h3>) : (<h3>Nmms, no es válido</h3>)}
+          {isVery ? (<h3>Genial, ya está verificado</h3>) : null}
 
           <FormGroup>
             <Button color="success" onClick={handleClick1}>
@@ -101,7 +98,7 @@ const Cedula = () => {
 
           <br></br>
 
-          {isLogins ? null : (
+          {isLogins ? (
             <div>
               <h2>Favor en agregar su Email y Teléfono</h2>
               <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -131,7 +128,8 @@ const Cedula = () => {
                 </Button>
               </FormGroup>
             </div>
-          )}
+          ) : null}
+
         </Jumbotron>
       </Form>
 
@@ -157,6 +155,7 @@ const Cedula = () => {
             <td>{e.tel}</td>
             <td>{e.email}</td>
           </tr>)}
+
         </tbody>
       </Table>
     </div>

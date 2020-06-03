@@ -86,6 +86,7 @@ namespace ReactApplication.Controllers
         {
             var todoItem = new DbCedula
             {
+                Cedula = dbCedula.Cedula,
                 Nombre = dbCedula.Nombre,
                 Apellido = dbCedula.Apellido,
                 Email = dbCedula.Email,
