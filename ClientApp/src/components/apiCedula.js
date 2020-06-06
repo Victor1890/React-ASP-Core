@@ -10,6 +10,7 @@ import {
   Table,
 } from "reactstrap";
 
+
 const Cedula = () => {
   const [ cedula, setCedula ] = useState(0);
   const [ email, setEmail ] = useState("");
@@ -19,18 +20,12 @@ const Cedula = () => {
   const [ datas, setDatas ] = useState([]);
   const [ datos, setDatos ] = useState([]);
 
-  const handlChange1 = (e) => {
+  const handlChange = (e) => {
     setCedula(([e.target.name] = e.target.value));
-  };
-
-  const handChange2 = (e) => {
+    setTel(([e.target.name] = e.target.value));
     setEmail(([e.target.name] = e.target.value));
   };
-
-  const handChange3 = (e) => {
-    setTel(([e.target.name] = e.target.value));
-  };
-
+  
   const handleClick1 = () => {
     axios
       .get(`http://173.249.49.169:88/api/test/consulta/${cedula}`)
@@ -47,22 +42,26 @@ const Cedula = () => {
 
   const handleClick2 = () => {
 
-    //if(email === '' || tel === 0)
-
     const data = {
       Cedula: datas.Cedula,
       Nombre: datas.Nombres,
       Apellido: datas.Apellido1,
       FechaNacimiento: datas.FechaNacimiento,
       LugarNacimiento: datas.LugarNacimiento,
-      email: email,
-      tel: parseInt(tel),
+      email:email,
+      tel: tel,
     };
-    console.table(data);
+
     axios.post(`http://localhost:5000/api/DbCedula`, data)
     .then(response => console.log(response))
     .catch(error => console.error(error));
   };
+
+  const handleDelete = i => {
+    axios.delete(`http://localhost:5000/api/DbCedula/${i}`)
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
+  }
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/DbCedula`)
@@ -84,7 +83,7 @@ const Cedula = () => {
               name="cedula"
               id="cedula"
               placeholder="Ej: 4084624986101"
-              onChange={handlChange1}
+              onChange={handlChange}
             />
           </FormGroup>
           
@@ -107,7 +106,7 @@ const Cedula = () => {
                   name="email"
                   id="email1"
                   placeholder="Ej: victorrosariodeveloper@gmail.com"
-                  onChange={handChange2}
+                  onChange={handlChange}
                 />
               </FormGroup>
               <br></br>
@@ -117,7 +116,7 @@ const Cedula = () => {
                   name="tel"
                   id="tel1"
                   placeholder="Ej: (829) 431-1465"
-                  onChange={handChange3}
+                  onChange={handlChange}
                 />
               </FormGroup>
 
@@ -142,11 +141,12 @@ const Cedula = () => {
             <th>Apellido</th>
             <th>Teléfono</th>
             <th>Correo Electrónico</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>
 
-          {datos.map((e,i) => 
+          {datos.map((e,i) =>
           <tr key={i}>
             <th scope="row">{i + 1}</th>
             <td>{e.cedula}</td>
@@ -154,6 +154,7 @@ const Cedula = () => {
             <td>{e.apellido}</td>
             <td>{e.tel}</td>
             <td>{e.email}</td>
+            <td> <Button color='danger' onClick={() => handleDelete(e.id)}> <i className="far fa-trash-alt"></i> </Button> </td>
           </tr>)}
 
         </tbody>

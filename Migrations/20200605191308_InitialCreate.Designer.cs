@@ -8,7 +8,7 @@ using ReactApplication.Model;
 namespace ReactApplication.Migrations
 {
     [DbContext(typeof(CedulaContext))]
-    [Migration("20200603163059_InitialCreate")]
+    [Migration("20200605191308_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace ReactApplication.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<long>("Cedula")
-                        .HasColumnType("BIGINT");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
@@ -42,7 +42,7 @@ namespace ReactApplication.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<long>("Tel")
-                        .HasColumnType("BIGINT");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

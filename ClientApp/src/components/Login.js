@@ -1,55 +1,58 @@
-﻿import React, { Component } from 'react';
+﻿import React, { useState } from 'react';
+import axios from 'axios';
 import { Col, Button, Form, FormGroup, Label, Input, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-export class Login extends Component{
+export const Login = () =>{
     
-    constructor(){
-        super();
-        this.state = {
-            email: '',
-            password: ''
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ User, setUser ] = useState(null);
+
+    const handleChange = e => {
+        setEmail(e.target.value);
     }
 
-    handleChange = e => {
-        this.setState({
-            [e.target.name] : e.target.value
-        });
+    const handleChange1 = e => {
+        setPassword(e.target.value);
     }
 
-    handleClick = () => {
-        const [ email, password ] = this.state;
+    const handleClick = () => {
 
-        console.log(email, password);
+        axios.get(`http://localhost:5000/api/DbUser`)
+        .then(response => {
+            response.data.map(e => {
+                if(email === e.email && password === e.password){
+                    document.location.href = '/Cedula';
+                    setUser(e);
+                }
+            });
+        })
+        .catch(error => console.log(error));
     }
 
-    render(){
-        return (
-            <div>
-                <Form>
-                    <FormGroup row>
-                        <Label for="email" sm={2}>Correo</Label>
-                        <Col sm={10}>
-                            <Input type="email" name="email" id="email" placeholder="Ej: victorrosariodeveloper@gmail.com" onChange={this.handleChange} />
-                        </Col>
-                    </FormGroup>
-                    <FormGroup row>
-                        <Label for="password" sm={2}>Contraseña</Label>
-                        <Col sm={10}>
-                            <Input type="password" name="password" id="password" placeholder="Ej: •••••••••" onChange={this.handleChange} />
-                        </Col>
-                    </FormGroup>
-    
-                    <Button type='button' color="success" block onClick={this.handleClick}>Log In</Button>
-    
-                    <FormGroup>
-                        <NavLink tag={Link} to='/Register' className='text-center'>¿Deseas registrase?</NavLink>
-                    </FormGroup>
-                </Form>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <Form>
+                <FormGroup row>
+                    <Label for="email" sm={2}>Correo</Label>
+                    <Col sm={10}>
+                        <Input type="email" name="email" id="email" placeholder="Ej: victorrosariodeveloper@gmail.com" onChange={handleChange} />
+                    </Col>
+                </FormGroup>
+                <FormGroup row>
+                    <Label for="password" sm={2}>Contraseña</Label>
+                    <Col sm={10}>
+                        <Input type="password" name="password" id="password" placeholder="Ej: •••••••••" onChange={handleChange1} />
+                    </Col>
+                </FormGroup>
+
+                <Button type='button' color="success" block onClick={handleClick}>Log In</Button>
+
+                <FormGroup>
+                    <NavLink tag={Link} to='/Register' className='text-center'>¿Deseas registrase?</NavLink>
+                </FormGroup>
+            </Form>
+        </div>
+    );
 }

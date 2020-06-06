@@ -12,7 +12,7 @@ namespace ReactApplication.Model
         [Key]
         public int Id { get; set; }
 
-        [Column(TypeName = "BIGINT")]
+        [Column(TypeName = "TEXT")]
         public long Cedula { get; set; }
 
         [Column(TypeName = "TEXT")]
@@ -30,7 +30,7 @@ namespace ReactApplication.Model
         [Column(TypeName = "TEXT")]
         public string Email { get; set; }
 
-        [Column(TypeName = "BIGINT")]
+        [Column(TypeName = "TEXT")]
         public long Tel { get; set; }
     }
 }
